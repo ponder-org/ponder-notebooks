@@ -13,24 +13,21 @@ bigquery_con = ponder.bigquery.connect(
 )
 ponder.bigquery.init(bigquery_con,enable_ssl=True)
 
-df = pd.read_csv("https://github.com/ponder-org/ponder-datasets/blob/main/citibike_trial.csv?raw=True", on_bad_lines='skip')
-df.to_sql("PONDER_CITIBIKE",bigquery_con,index=False)
-print("Uploaded dataset to PONDER_CITIBIKE")
+# df = pd.read_csv("https://github.com/ponder-org/ponder-datasets/blob/main/citibike_trial.csv?raw=True", on_bad_lines='skip')
+# df.to_sql("PONDER_CITIBIKE",bigquery_con,index=False)
+# print("Uploaded dataset to PONDER_CITIBIKE")
 
 
 df = pd.read_csv("https://github.com/ponder-org/ponder-datasets/blob/main/books.csv?raw=True", on_bad_lines='skip')
+df = df.dropna() # Causes errors for None writeback
 df.to_sql("PONDER_BOOKS",bigquery_con,index=False)
 print("Uploaded dataset to PONDER_BOOKS")
 
 
-df = pd.read_csv("https://github.com/ponder-org/ponder-datasets/blob/main/yellow_tripdata_2015-01.csv?raw=True", on_bad_lines='skip')
-df.to_sql("PONDER_TAXI",bigquery_con,index=False)
-print("Uploaded dataset to PONDER_TAXI")
+# df = pd.read_csv("https://github.com/ponder-org/ponder-datasets/blob/main/yellow_tripdata_2015-01.csv?raw=True", on_bad_lines='skip')
+# df.to_sql("PONDER_TAXI",bigquery_con,index=False)
+# print("Uploaded dataset to PONDER_TAXI")
 
-
-df = pd.read_csv("https://github.com/ponder-org/ponder-datasets/blob/main/books.csv?raw=True", on_bad_lines='skip')
-df.to_sql("PONDER_BOOKS",bigquery_con,index=False)
-print("Uploaded dataset to PONDER_BOOKS")
 
 # Upload TPC-H
 df = pd.read_csv("https://github.com/ponder-org/ponder-datasets/blob/main/tpch/customer.csv?raw=True", on_bad_lines='skip')
