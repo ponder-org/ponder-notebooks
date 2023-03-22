@@ -32,19 +32,12 @@ bigquery_con = ponder.bigquery.connect(
 ponder.bigquery.init(bigquery_con,enable_ssl=True)
 
 import modin.pandas as pd
-from ponder.utils.core import Teleporter
-t = Teleporter()
-remote_path = t.depulso("mimic-iii-clinical-database-demo-1.4/ICUSTAYS.csv")
 
-tmp = pd.read_csv(remote_path, on_bad_lines='skip')
+tmp = pd.read_csv("https://raw.githubusercontent.com/ponder-org/ponder-datasets/main/mimic-iii/ICUSTAYS.csv", on_bad_lines='skip')
 tmp.to_sql("ICUSTAYS",bigquery_con,index=False)
 
-t = Teleporter()
-remote_path = t.depulso("mimic-iii-clinical-database-demo-1.4/PATIENTS.csv")
-tmp = pd.read_csv(remote_path, on_bad_lines='skip')
+tmp = pd.read_csv("https://raw.githubusercontent.com/ponder-org/ponder-datasets/main/mimic-iii/PATIENTS.csv", on_bad_lines='skip')
 tmp.to_sql("PATIENTS",bigquery_con,index=False)
 
-t = Teleporter()
-remote_path = t.depulso("mimic-iii-clinical-database-demo-1.4/ADMISSIONS.csv")
-tmp = pd.read_csv(remote_path, on_bad_lines='skip')
+tmp = pd.read_csv("https://raw.githubusercontent.com/ponder-org/ponder-datasets/main/mimic-iii/ADMISSIONS.csv", on_bad_lines='skip')
 tmp.to_sql("ADMISSIONS",bigquery_con,index=False)
