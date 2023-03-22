@@ -1,27 +1,21 @@
-import credential
 import ponder.bigquery
 import modin.pandas as pd
 
-bigquery_con = ponder.bigquery.connect(
-    user=credential.params["user"],
-    password=credential.params["password"],
-    account=credential.params["account"],
-    role=credential.params["role"],
-    database=credential.params["database"],
-    schema=credential.params["schema"],
-    warehouse=credential.params["warehouse"]
-)
-ponder.bigquery.init(bigquery_con,enable_ssl=True)
+# Create a Ponder BigQuery Connections object
+bigquery_con = ponder.bigquery.connect(creds, schema = "TEST")
+
+# Initialize the BigQuery connection
+ponder.bigquery.init(bigquery_con)
 
 # df = pd.read_csv("https://github.com/ponder-org/ponder-datasets/blob/main/citibike_trial.csv?raw=True", on_bad_lines='skip')
 # df.to_sql("PONDER_CITIBIKE",bigquery_con,index=False)
 # print("Uploaded dataset to PONDER_CITIBIKE")
 
 
-df = pd.read_csv("https://github.com/ponder-org/ponder-datasets/blob/main/books.csv?raw=True", on_bad_lines='skip')
-df = df.dropna() # Causes errors for None writeback
-df.to_sql("PONDER_BOOKS",bigquery_con,index=False)
-print("Uploaded dataset to PONDER_BOOKS")
+# df = pd.read_csv("https://github.com/ponder-org/ponder-datasets/blob/main/books.csv?raw=True", on_bad_lines='skip')
+# df = df.dropna() # Causes errors for None writeback
+# df.to_sql("PONDER_BOOKS",bigquery_con,index=False)
+# print("Uploaded dataset to PONDER_BOOKS")
 
 
 # df = pd.read_csv("https://github.com/ponder-org/ponder-datasets/blob/main/yellow_tripdata_2015-01.csv?raw=True", on_bad_lines='skip')
