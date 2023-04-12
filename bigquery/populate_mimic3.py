@@ -5,7 +5,7 @@ creds = json.load(open(os.path.expanduser("credential.json")))
 # Create a Ponder BigQuery Connections object
 bigquery_con = ponder.bigquery.connect(creds, schema = "TEST")
 # Initialize the BigQuery connection
-ponder.bigquery.init(bigquery_con,enable_ssl=True)
+ponder.bigquery.init(bigquery_con)
 
 import modin.pandas as pd
 
