@@ -11,7 +11,7 @@ snowflake_con = ponder.snowflake.connect(
     schema=credential.params["schema"],
     warehouse=credential.params["warehouse"]
 )
-ponder.snowflake.init(snowflake_con,enable_ssl=True)
+ponder.snowflake.init(snowflake_con)
 
 df = pd.read_csv("https://github.com/ponder-org/ponder-datasets/blob/main/citibike_trial.csv?raw=True", on_bad_lines='skip')
 df.to_sql("PONDER_CITIBIKE",snowflake_con,index=False)

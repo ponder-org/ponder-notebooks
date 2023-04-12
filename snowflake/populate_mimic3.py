@@ -29,7 +29,7 @@ snowflake_con = ponder.snowflake.connect(
     warehouse=credential.params["warehouse"]
 )
 # Initialize the Snowflake connection
-ponder.snowflake.init(snowflake_con,enable_ssl=True)
+ponder.snowflake.init(snowflake_con)
 
 import modin.pandas as pd
 from ponder.utils.core import Teleporter
