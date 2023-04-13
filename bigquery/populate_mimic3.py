@@ -3,7 +3,7 @@ import modin.pandas as pd
 import json; import os; 
 creds = json.load(open(os.path.expanduser("credential.json")))
 # Create a Ponder BigQuery Connections object
-bigquery_con = ponder.bigquery.connect(creds, schema = "TEST")
+bigquery_con = ponder.bigquery.connect(creds, schema = "MIMIC3")
 # Initialize the BigQuery connection
 ponder.bigquery.init(bigquery_con)
 
