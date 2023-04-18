@@ -1,5 +1,4 @@
 import credential
-import ponder.snowflake
 credential.params["database"] = "MIMIC3"
 # Create Database MIMIC3
 # ! pip install --upgrade snowflake-sqlalchemy
@@ -17,9 +16,11 @@ engine = create_engine(URL(
 connection = engine.connect()
 connection.execute("CREATE DATABASE IF NOT EXISTS MIMIC3;") 
 
+import ponder
+ponder.init()
 
-# Create a Ponder Snowflake Connections object
-snowflake_con = ponder.snowflake.connect(
+import snowflake.connector
+snowflake_con = snowflake.connector.connect(
     user=credential.params["user"],
     password=credential.params["password"],
     account=credential.params["account"],
@@ -28,23 +29,16 @@ snowflake_con = ponder.snowflake.connect(
     schema=credential.params["schema"],
     warehouse=credential.params["warehouse"]
 )
-# Initialize the Snowflake connection
-ponder.snowflake.init(snowflake_con)
+ponder.configure(default_connection=snowflake_con)
+
 
 import modin.pandas as pd
-from ponder.utils.core import Teleporter
-t = Teleporter()
-remote_path = t.depulso("mimic-iii-clinical-database-demo-1.4/ICUSTAYS.csv")
 
-tmp = pd.read_csv(remote_path, on_bad_lines='skip')
+tmp = pd.read_csv("https://raw.githubusercontent.com/ponder-org/ponder-datasets/main/mimic-iii/ICUSTAYS.csv", on_bad_lines='skip')
 tmp.to_sql("ICUSTAYS",snowflake_con,index=False)
 
-t = Teleporter()
-remote_path = t.depulso("mimic-iii-clinical-database-demo-1.4/PATIENTS.csv")
-tmp = pd.read_csv(remote_path, on_bad_lines='skip')
+tmp = pd.read_csv("https://raw.githubusercontent.com/ponder-org/ponder-datasets/main/mimic-iii/PATIENTS.csv", on_bad_lines='skip')
 tmp.to_sql("PATIENTS",snowflake_con,index=False)
 
-t = Teleporter()
-remote_path = t.depulso("mimic-iii-clinical-database-demo-1.4/ADMISSIONS.csv")
-tmp = pd.read_csv(remote_path, on_bad_lines='skip')
+tmp = pd.read_csv("https://raw.githubusercontent.com/ponder-org/ponder-datasets/main/mimic-iii/ADMISSIONS.csv", on_bad_lines='skip')
 tmp.to_sql("ADMISSIONS",snowflake_con,index=False)
