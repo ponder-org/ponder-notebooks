@@ -1,8 +1,10 @@
 import credential
-import ponder.snowflake
+import ponder
+ponder.init()
 import modin.pandas as pd
 
-snowflake_con = ponder.snowflake.connect(
+import snowflake.connector
+snowflake_con = snowflake.connector.connect(
     user=credential.params["user"],
     password=credential.params["password"],
     account=credential.params["account"],
@@ -11,7 +13,7 @@ snowflake_con = ponder.snowflake.connect(
     schema=credential.params["schema"],
     warehouse=credential.params["warehouse"]
 )
-ponder.snowflake.init(snowflake_con)
+ponder.configure(default_connection=snowflake_con)
 
 df = pd.read_csv("https://github.com/ponder-org/ponder-datasets/blob/main/citibike_trial.csv?raw=True", on_bad_lines='skip')
 df.to_sql("PONDER_CITIBIKE",snowflake_con,index=False)
