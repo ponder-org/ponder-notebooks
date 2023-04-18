@@ -1,11 +1,23 @@
 import ponder.bigquery
 import modin.pandas as pd
-import json; import os; 
-creds = json.load(open(os.path.expanduser("credential.json")))
-# Create a Ponder BigQuery Connections object
-bigquery_con = ponder.bigquery.connect(creds, schema = "PONDER")
-# Initialize the BigQuery connection
-ponder.bigquery.init(bigquery_con)
+
+import ponder; ponder.init()
+from google.cloud import bigquery
+from google.cloud.bigquery import dbapi
+from google.oauth2 import service_account
+import json
+
+bigquery_con = dbapi.Connection(
+            bigquery.Client(
+            credentials=service_account.Credentials.from_service_account_info(
+                    json.loads(open("../credential.json").read()),
+                    scopes=["https://www.googleapis.com/auth/bigquery"],
+                )
+            )
+        )
+
+ponder.configure(bigquery_dataset='PONDER', default_connection=bigquery_con)
+
 
 # df = pd.read_csv("https://github.com/ponder-org/ponder-datasets/blob/main/citibike_trial.csv?raw=True", on_bad_lines='skip')
 # df.to_sql("PONDER_CITIBIKE",bigquery_con,index=False)
