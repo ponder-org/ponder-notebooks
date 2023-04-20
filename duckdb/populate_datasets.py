@@ -15,11 +15,6 @@ df = pd.read_csv("https://github.com/ponder-org/ponder-datasets/blob/main/books.
 df.to_sql("PONDER_BOOKS",duckdb_con,index=False)
 print("Uploaded dataset to PONDER_BOOKS")
 
-
-df = pd.read_csv("https://github.com/ponder-org/ponder-datasets/blob/main/yellow_tripdata_2015-01.csv?raw=True", on_bad_lines='skip')
-df.to_sql("PONDER_TAXI",duckdb_con,index=False)
-print("Uploaded dataset to PONDER_TAXI")
-
 # Upload TPC-H
 df = pd.read_csv("https://github.com/ponder-org/ponder-datasets/blob/main/tpch/customer.csv?raw=True", on_bad_lines='skip')
 df.to_sql("PONDER_CUSTOMER",duckdb_con,index=False)

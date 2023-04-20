@@ -19,15 +19,9 @@ df = pd.read_csv("https://github.com/ponder-org/ponder-datasets/blob/main/citibi
 df.to_sql("PONDER_CITIBIKE",snowflake_con,index=False)
 print("Uploaded dataset to PONDER_CITIBIKE")
 
-
 df = pd.read_csv("https://github.com/ponder-org/ponder-datasets/blob/main/books.csv?raw=True", on_bad_lines='skip')
 df.to_sql("PONDER_BOOKS",snowflake_con,index=False)
 print("Uploaded dataset to PONDER_BOOKS")
-
-
-df = pd.read_csv("https://github.com/ponder-org/ponder-datasets/blob/main/yellow_tripdata_2015-01.csv?raw=True", on_bad_lines='skip')
-df.to_sql("PONDER_TAXI",snowflake_con,index=False)
-print("Uploaded dataset to PONDER_TAXI")
 
 # Upload TPC-H
 df = pd.read_csv("https://github.com/ponder-org/ponder-datasets/blob/main/tpch/customer.csv?raw=True", on_bad_lines='skip')
