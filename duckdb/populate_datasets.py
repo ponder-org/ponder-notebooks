@@ -11,7 +11,6 @@ df = pd.read_csv("https://github.com/ponder-org/ponder-datasets/blob/main/citibi
 df.to_sql("PONDER_CITIBIKE",duckdb_con,index=False)
 print("Uploaded dataset to PONDER_CITIBIKE")
 
-
 df = pd.read_csv("https://github.com/ponder-org/ponder-datasets/blob/main/books.csv?raw=True", on_bad_lines='skip')
 df.to_sql("PONDER_BOOKS",duckdb_con,index=False)
 print("Uploaded dataset to PONDER_BOOKS")
