@@ -10,3 +10,7 @@ Once you populate your credentials in `snowflake/credential.py` or `bigquery/cre
 git update-index --assume-unchanged snowflake/credential.py 
 git update-index --assume-unchanged bigquery/credential.json 
 ```
+
+### Note
+
+Any commit made to the main branch will trigger an auto-commit on the [pandas-web-hub](https://github.com/ponder-org/pandas-web-hub) repo
