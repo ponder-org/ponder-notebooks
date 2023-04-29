@@ -33,7 +33,7 @@ jobs:
           cd pandas-web-hub
           
           # Move tutorial zip file
-          mv ../demo-apps/tutorial.zip ./packages/portal/notebook/.
+          mv ../ponder-notebooks/tutorial.zip ./packages/portal/public/assets/notebook/.
 
           # Copy the contents of the "ponder notebook" repository to the "pandas web hub" repository
           cp -r ../ponder-notebooks/* ./packages/portal/public/assets/notebook/.
