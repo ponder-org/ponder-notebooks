@@ -34,14 +34,14 @@ ponder.configure(default_connection=snowflake_con)
 
 import modin.pandas as pd
 
-tmp = pd.read_csv("https://raw.githubusercontent.com/ponder-org/ponder-datasets/main/mimic-iii/ICUSTAYS.csv", on_bad_lines='skip')
+tmp = pd.read_csv("https://raw.githubusercontent.com/ponder-org/ponder-datasets/main/mimic-iii/ICUSTAYS.csv")
 tmp.to_sql("ICUSTAYS",snowflake_con,index=False)
 print("Uploaded dataset to ICUSTAYS")
 
-tmp = pd.read_csv("https://raw.githubusercontent.com/ponder-org/ponder-datasets/main/mimic-iii/PATIENTS.csv", on_bad_lines='skip')
+tmp = pd.read_csv("https://raw.githubusercontent.com/ponder-org/ponder-datasets/main/mimic-iii/PATIENTS.csv")
 tmp.to_sql("PATIENTS",snowflake_con,index=False)
 print("Uploaded dataset to PATIENTS")
 
-tmp = pd.read_csv("https://raw.githubusercontent.com/ponder-org/ponder-datasets/main/mimic-iii/ADMISSIONS.csv", on_bad_lines='skip')
+tmp = pd.read_csv("https://raw.githubusercontent.com/ponder-org/ponder-datasets/main/mimic-iii/ADMISSIONS.csv")
 tmp.to_sql("ADMISSIONS",snowflake_con,index=False)
 print("Uploaded dataset to ADMISSIONS")
