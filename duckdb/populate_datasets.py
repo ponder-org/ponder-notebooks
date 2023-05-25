@@ -7,7 +7,7 @@ ponder.configure(default_connection=duckdb_con)
 
 import modin.pandas as pd
 
-df = pd.read_csv("https://github.com/ponder-org/ponder-datasets/blob/main/citibike_trial.csv?raw=True", on_bad_lines='skip')
+df = pd.read_csv("https://github.com/ponder-org/ponder-datasets/blob/main/citibike_tutorial.csv?raw=True", on_bad_lines='skip')
 df.to_sql("PONDER_CITIBIKE",duckdb_con,index=False)
 print("Uploaded dataset to PONDER_CITIBIKE")
 
