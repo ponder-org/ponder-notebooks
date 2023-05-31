@@ -2,21 +2,20 @@ import ponder
 ponder.init()
 
 import duckdb
-duckdb_con = duckdb.connect("mimic3.db")
-ponder.configure(default_connection=duckdb_con)
+db_con = duckdb.connect("mimic3.db")
+ponder.configure(default_connection=db_con)
 
 import modin.pandas as pd
 
-tmp = pd.read_csv("https://raw.githubusercontent.com/ponder-org/ponder-datasets/main/mimic-iii/ICUSTAYS.csv")
-tmp.to_sql("ICUSTAYS",duckdb_con,index=False)
-print("Uploaded dataset to ICUSTAYS")
+def try_upload_csv(db_con,url,name):
+    df = pd.read_csv(url)
+    try:
+        df.to_sql(name,db_con,index=False)
+        print(f"Uploaded dataset to {name}")
+    except ValueError as e:
+        print(f"{name} already exists")
 
-tmp = pd.read_csv("https://raw.githubusercontent.com/ponder-org/ponder-datasets/main/mimic-iii/PATIENTS.csv")
-tmp.to_sql("PATIENTS",duckdb_con,index=False)
-print("Uploaded dataset to PATIENTS")
-
-tmp = pd.read_csv("https://raw.githubusercontent.com/ponder-org/ponder-datasets/main/mimic-iii/ADMISSIONS.csv")
-tmp.to_sql("ADMISSIONS",duckdb_con,index=False)
-print("Uploaded dataset to ADMISSIONS")
-
-duckdb_con.close()
+try_upload_csv(db_con,"https://raw.githubusercontent.com/ponder-org/ponder-datasets/main/mimic-iii/ICUSTAYS.csv", "ICUSTAYS")
+try_upload_csv(db_con,"https://raw.githubusercontent.com/ponder-org/ponder-datasets/main/mimic-iii/PATIENTS.csv","PATIENTS")
+try_upload_csv(db_con,"https://raw.githubusercontent.com/ponder-org/ponder-datasets/main/mimic-iii/ADMISSIONS.csv","ADMISSIONS")
+db_con.close()
