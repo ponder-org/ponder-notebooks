@@ -13,7 +13,7 @@ db_con = dbapi.Connection(
             )
         )
 
-ponder.configure(bigquery_dataset='PONDER', default_connection=db_con)
+ponder.configure(bigquery_dataset='TEST', default_connection=db_con)
 
 import modin.pandas as pd
 
@@ -23,7 +23,7 @@ def try_upload_csv(db_con,url,name):
         df.to_sql(name,db_con,index=False)
         print(f"Uploaded dataset to {name}")
     except ValueError as e:
-        print(f"PONDER.{name} already exists")
+        print(f"TEST.{name} already exists")
 
 # try_upload_csv(db_con,"https://github.com/ponder-org/ponder-datasets/blob/main/citibike_tutorial.csv?raw=True", "PONDER_CITIBIKE")
 try_upload_csv(db_con,"https://github.com/ponder-org/ponder-datasets/blob/main/books.csv?raw=True", "PONDER_BOOKS")
