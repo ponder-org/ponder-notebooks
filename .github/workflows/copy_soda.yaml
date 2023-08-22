@@ -1,0 +1,46 @@
+name: Copy Notebooks
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  copy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Git
+        run: |
+          git config --global user.name "ponder"
+          git config --global user.email "ponder@github.com"
+          git config --global credential.helper store 
+        env:
+          PAT: ${{ secrets.PAT }}
+
+      - name: Copy Notebook files
+        run: |
+          # Clone the source repository
+          git clone https://ponder:${{ secrets.PAT }}@github.com/ponder-org/ponder-notebooks.git
+          
+          # Create zip file
+          cd ponder-notebooks
+          zip -r tutorial.zip . -x '*.git*'
+          cd ..
+
+          # Clone the target repository
+          git clone https://ponder:${{ secrets.PAT }}@github.com/ponder-org/soda.git
+          cd pandas-web-hub
+          
+          # Move tutorial zip file
+          mv ../ponder-notebooks/tutorial.zip ./integration_test/notebooks/ponder-notebooks/.
+
+          # Copy the contents of the "ponder notebook" repository to the "pandas web hub" repository
+          cp -r ../ponder-notebooks/* ./integration_test/notebooks/ponder-notebooks/.
+
+          # Commit and push the changes to the a PR
+          git checkout -b "ponder/notebook_update"
+          git commit -m "auto commit: copy notebooks files"
+          git push origin ponder/notebook_update
+        env:
+          GITHUB_TOKEN: ${{ secrets.TOKEN }}
