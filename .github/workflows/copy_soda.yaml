@@ -1,4 +1,4 @@
-name: Copy Notebooks
+name: Copy Notebooks to soda
 
 on:
   push:
@@ -30,7 +30,7 @@ jobs:
 
           # Clone the target repository
           git clone https://ponder:${{ secrets.PAT }}@github.com/ponder-org/soda.git
-          cd pandas-web-hub
+          cd soda
           
           # Move tutorial zip file
           mv ../ponder-notebooks/tutorial.zip ./integration_test/notebooks/ponder-notebooks/.
@@ -38,9 +38,9 @@ jobs:
           # Copy the contents of the "ponder notebook" repository to the "pandas web hub" repository
           cp -r ../ponder-notebooks/* ./integration_test/notebooks/ponder-notebooks/.
 
-          # Commit and push the changes to the a PR
+          # Commit and push the changes to a PR
           git checkout -b "ponder/notebook_update"
-          git commit -m "auto commit: copy notebooks files"
+          git commit -m "auto commit: copy ponder-notebooks files"
           git push origin ponder/notebook_update
         env:
           GITHUB_TOKEN: ${{ secrets.TOKEN }}
