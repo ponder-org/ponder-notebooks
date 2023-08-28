@@ -15,7 +15,7 @@ db_con = dbapi.Connection(
     )
 )
 
-ponder.configure(bigquery_dataset="TEST", default_connection=db_con)
+ponder.configure(bigquery_dataset="PONDER", default_connection=db_con)
 
 import modin.pandas as pd
 
